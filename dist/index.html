@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Señas LSC · Prototipo Sprint 1</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A4%9F%3C/text%3E%3C/svg%3E">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' blob:; object-src 'none'; base-uri 'self'">
+<meta name="description" content="Prototipo de traducción de español a Lengua de Señas Colombiana (LSC) con avatar y diccionario oficial.">
+<link rel="stylesheet" href="assets/styles.css?v=1.0.0">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<main>
+<header>
+  <span class="badge">UEES · Grupo 6 · Sprint 1 · prototipo simulado</span>
+  <button class="ghost theme" id="theme" aria-label="Cambiar tema">Tema</button>
+</header>
+<h1>Del español hablado a la Lengua de Señas Colombiana</h1>
+<p class="sub">Escribe una frase o sube un video. El prototipo recorre la cadena Video → Audio → Transcripción → Semántica y propone la secuencia de señas.</p>
+
+<section class="panel">
+  <label for="txt"><b>Frase o transcripción</b></label>
+  <textarea id="txt">Hoy vamos a hablar sobre la importancia de la inclusión</textarea>
+  <div class="row">
+    <div class="drop" id="drop">Video (opcional): <input type="file" id="file" accept="video/*" aria-label="Subir video"></div>
+    <button class="primary" id="go">Traducir a LSC</button>
+  </div>
+</section>
+
+<div class="vwrap" id="vwrap">
+  <video id="vid" controls playsinline></video>
+  <div class="sign" aria-live="polite">
+    <svg class="avatar" viewBox="-10 0 220 250" role="img" aria-label="Avatar intérprete de LSC">
+      <path d="M34 250C34 175 60 150 100 150S166 175 166 250Z" fill="#2a1a22"/>
+      <rect x="92" y="124" width="16" height="30" rx="6" fill="#d9a07a"/>
+      <g id="hd"><ellipse cx="100" cy="100" rx="27" ry="32" fill="#e8b894"/>
+        <path d="M72 98C68 56 132 56 128 98C124 78 76 78 72 98Z" fill="#2b1b17"/>
+        <g id="br" stroke="#2b1b17" stroke-width="2.5" stroke-linecap="round"><line x1="83" y1="89" x2="96" y2="89"/><line x1="104" y1="89" x2="117" y2="89"/></g>
+        <circle cx="90" cy="99" r="2.8" fill="#2b1b17"/><circle cx="110" cy="99" r="2.8" fill="#2b1b17"/>
+        <ellipse id="mo" cx="100" cy="118" rx="7" ry="1.5" fill="#7a2a2a"/></g>
+      <g id="arms"></g>
+    </svg>
+    <div class="word" id="word">Intérprete LSC</div>
+    <div class="hint" id="hint">Sube un video y pulsa Traducir</div>
+    <div class="bar" id="bar"></div>
+  </div>
+</div>
+
+<section class="panel" aria-live="polite">
+  <div class="pipe" id="pipe">
+    <div class="step"><b>Carga de video</b><small>HU01</small></div>
+    <div class="step"><b>Audio 16 kHz</b><small>HU02</small></div>
+    <div class="step"><b>Transcripción</b><small>HU03</small></div>
+    <div class="step"><b>Semántica</b><small>HU04</small></div>
+  </div>
+</section>
+
+<div class="grid hidden" id="out">
+  <section class="panel" id="info" style="grid-column:1/-1" aria-live="polite"></section>
+  <div style="display:contents">
+    <section class="panel">
+      <h2>Secuencia de señas (glosas)</h2>
+      <ul class="seq" id="seq"></ul>
+      <div class="row"><button class="primary" id="play">Reproducir</button><button class="ghost" id="slow">Velocidad: normal</button></div>
+      <p class="note">Con video, las señas se reparten de forma uniforme sobre su duración; en el sistema real se sincronizan con los timestamps del ASR (HU03). Señas y descripciones: Diccionario Básico de la LSC (INSOR e Instituto Caro y Cuervo, 2006). Las glosas son una aproximación por reglas. Una persona intérprete de LSC debe validarlas (riesgos R01 y R18).</p>
+    </section>
+    <section class="panel">
+      <h2>Significado estructurado</h2>
+      <dl id="sem"></dl>
+      <pre id="json"></pre>
+    </section>
+  </div>
+</div>
+</main>
+<script src="assets/lexicon.js?v=1.0.0"></script>
+<script src="assets/app.js?v=1.0.0"></script>
+</body>
+</html>

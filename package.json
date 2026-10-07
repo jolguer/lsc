@@ -1,0 +1,13 @@
+{
+  "name": "senas-lsc",
+  "version": "1.0.0",
+  "description": "Prototipo Sprint 1: español a Lengua de Señas Colombiana (LSC) con avatar y diccionario oficial",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "start": "node scripts/serve.js",
+    "lexicon": "python3 tools/build_lexicon.py"
+  },
+  "devDependencies": { "csso": "^5.0.5", "terser": "^5.31.0" },
+  "engines": { "node": ">=18" }
+}
